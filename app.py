@@ -1,10 +1,10 @@
 import pygame
-from random import random, randint
+from random import random
 from collections import defaultdict
 
 
 # updates per second
-FRAME_RATE = 30
+FRAME_RATE = 20
 TILE_SIZE = 20
 
 SCREEN_SIZE = 800, 600
@@ -12,11 +12,6 @@ GRID_W = SCREEN_SIZE[0] // TILE_SIZE
 GRID_H = SCREEN_SIZE[1] // TILE_SIZE
 
 BLACK = 0, 0, 0
-WHITE = 255, 255, 255
-FIRE = [
-    (255, int(255 - i * 255/GRID_H), 0)
-    for i in range(GRID_H)
-]
 
 
 pygame.init()
@@ -50,8 +45,10 @@ def iter_grid(grid):
     for x, col in enumerate(grid):
         for y, cell in enumerate(col):
 
-            if y == h-1:
-                new[x][y] = chance(90)
+            color = (128 + int(128 * y/GRID_H), 255 - int(255 * y/GRID_H), 0)
+
+            if y == h-1 and chance(90):
+                new[x][y] = color
                 continue
 
             if x > 0:
@@ -67,24 +64,18 @@ def iter_grid(grid):
             points = 0
 
             if y > 0:
-                top = left_col[y-1] + col[y-1] + right_col[y-1]
+                top = int(bool(left_col[y-1])) + int(bool(col[y-1])) + int(bool(right_col[y-1]))
                 points = top * 1
 
-            middle = left_col[y] + right_col[y]
+            middle = int(bool(left_col[y])) + int(bool(right_col[y]))
             points += middle * 2
 
             if y < GRID_H - 1:
-                bottom = left_col[y+1] + col[y+1] + right_col[y+1]
+                bottom = int(bool(left_col[y+1])) + int(bool(col[y+1])) + int(bool(right_col[y+1]))
                 points += bottom * 3
 
-            new[x][y] = int(points >= 5) and chance(30 + 50 * (y / h))
-
-            # bonus = y / GRID_H * 50
-            # if y == h-1:
-            #     new[x][y] = chance(90)
-            # if y > 0 and cell:
-            #     new[x][y-1] = chance(30 + bonus)
-            #     new[x][y] = chance(70 + bonus)
+            if int(points >= 5) and chance(30 + 50 * (y / h)):
+                new[x][y] = color
 
     return new
 
@@ -92,10 +83,9 @@ def iter_grid(grid):
 def draw_grid(grid, screen):
     for x, col in enumerate(grid):
         for y, cell in enumerate(col):
-            if cell > 0:
-                color = FIRE[y]
+            if cell:
                 pygame.draw.rect(
-                    screen, color, pygame.Rect(
+                    screen, cell, pygame.Rect(
                         x * TILE_SIZE, y * TILE_SIZE,
                         TILE_SIZE, TILE_SIZE
                     )
