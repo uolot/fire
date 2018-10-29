@@ -14,12 +14,6 @@ GRID_H = SCREEN_SIZE[1] // TILE_SIZE
 BLACK = 0, 0, 0
 
 
-pygame.init()
-screen = pygame.display.set_mode(SCREEN_SIZE)
-clock = pygame.time.Clock()
-done = False
-
-
 def chance(p):
     p = p / 100
     r = random()
@@ -92,22 +86,31 @@ def draw_grid(grid, screen):
                 )
 
 
+pygame.init()
+screen = pygame.display.set_mode(SCREEN_SIZE)
+clock = pygame.time.Clock()
+
 grid = new_grid(GRID_W, GRID_H)
 init_grid(grid)
 
+done = False
+paused = False
 
 while not done:
     for event in pygame.event.get():
         done = event.type == pygame.QUIT
-        if not done:
-            is_keydown = event.type == pygame.KEYDOWN
-            done = is_keydown and event.key in [pygame.K_ESCAPE, pygame.K_q]
+        if not done and event.type == pygame.KEYDOWN:
+            if event.key in [pygame.K_ESCAPE, pygame.K_q]:
+                done = True
+            elif event.key == pygame.K_p:
+                paused ^= True
 
-    screen.fill(BLACK)
+    if not paused:
+        screen.fill(BLACK)
+        draw_grid(grid, screen)
+        grid = iter_grid(grid)
+        pygame.display.update()
 
-    draw_grid(grid, screen)
-    grid = iter_grid(grid)
-    pygame.display.update()
     clock.tick(FRAME_RATE)
 
 
