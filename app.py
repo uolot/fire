@@ -100,7 +100,8 @@ paused = False
 export = len(sys.argv) > 1 and sys.argv[1] == '--gif'
 count = 0
 dirname = 'export'
-MAX_FRAMES = 99
+SKIP_FRAMES = 20
+MAX_FRAMES = 100 + SKIP_FRAMES
 
 
 while not done:
@@ -121,7 +122,9 @@ while not done:
         if export:
             if count >= MAX_FRAMES:
                 done = True
-            pygame.image.save(screen, f'{dirname}/{count:02}.png')
+            elif count >= SKIP_FRAMES:
+                n = count - SKIP_FRAMES
+                pygame.image.save(screen, f'{dirname}/{n:02}.png')
             count += 1
 
     clock.tick(FRAME_RATE)
