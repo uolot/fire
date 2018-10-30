@@ -5,5 +5,9 @@ Made for fun, made from scratch - didn't do any research on how to create such e
 
 Very much WIP.
 
-30th of October, 21:18
-![30th of October, 21:18](gifs/fire-2018-10-30_21-18-18.gif)
+30th of October - basic
+![](gifs/fire-2018-10-30_21-18-18.gif)
+
+30th of October - shifting squares
+![](gifs/fire-2018-10-30_21-53-29.gif)
+

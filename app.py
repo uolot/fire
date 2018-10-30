@@ -1,7 +1,8 @@
-import pygame
-from random import random
 from collections import defaultdict
+import random
 import sys
+
+import pygame
 
 
 # updates per second
@@ -27,11 +28,20 @@ export = len(sys.argv) > 1 and sys.argv[1] == '--gif'
 count = 0
 dirname = 'export'
 
+# drawing options
+shift = True
+SHIFT_FACTOR = 0.2
+
 
 def chance(p):
     p = p / 100
-    r = random()
+    r = random.random()
     return 1 if r < p else 0
+
+
+def random_shift(x, p):
+    r = random.random() * p * 2 - p
+    return x + r * x
 
 
 def new_grid():
@@ -89,10 +99,13 @@ def draw_grid(grid, screen):
     for x, col in enumerate(grid):
         for y, cell in enumerate(col):
             if cell:
+                cx, cy = x * TILE_SIZE, y * TILE_SIZE
+                if shift:
+                    cx = cx + random_shift(TILE_SIZE, SHIFT_FACTOR)
+                    cy = cy + random_shift(TILE_SIZE, SHIFT_FACTOR)
                 pygame.draw.rect(
                     screen, cell, pygame.Rect(
-                        x * TILE_SIZE, y * TILE_SIZE,
-                        TILE_SIZE, TILE_SIZE
+                        cx, cy, TILE_SIZE, TILE_SIZE
                     )
                 )
 
