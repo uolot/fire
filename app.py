@@ -36,6 +36,10 @@ SHIFT_FACTOR = 0.1
 scale = True
 MIN_SCALE_FACTOR = 0.5
 
+# shape options
+shape = 'circle'
+# shape = 'rect'
+
 
 def chance(p):
     p = p / 100
@@ -44,8 +48,10 @@ def chance(p):
 
 
 def random_shift(x, p):
+    """Change x by up to p percent (where 0 <= p < 1)"""
     d = x * p
-    return random.randint(-d, d)
+    s = random.random() * 2 * d - d
+    return x + s
 
 
 def new_grid():
@@ -105,20 +111,30 @@ def draw_grid(grid, screen):
             if cell:
                 cx, cy = x * TILE_SIZE, y * TILE_SIZE
                 if shift:
-                    cx = cx + random_shift(TILE_SIZE, SHIFT_FACTOR)
-                    cy = cy + random_shift(TILE_SIZE, SHIFT_FACTOR)
+                    cx = cx + int(random_shift(TILE_SIZE, SHIFT_FACTOR))
+                    cy = cy + int(random_shift(TILE_SIZE, SHIFT_FACTOR))
 
-                cw, ch = TILE_SIZE, TILE_SIZE
                 if scale:
                     yp = y / GRID_H
-                    cw = cw * (yp + MIN_SCALE_FACTOR)
-                    ch = ch * (yp + MIN_SCALE_FACTOR)
 
-                pygame.draw.rect(
-                    screen, cell, pygame.Rect(
-                        cx, cy, cw, ch
+                if shape == 'rect':
+                    cw, ch = TILE_SIZE, TILE_SIZE
+                    if scale:
+                        cw = cw * (yp + MIN_SCALE_FACTOR)
+                        ch = ch * (yp + MIN_SCALE_FACTOR)
+                    pygame.draw.rect(
+                        screen, cell, pygame.Rect(
+                            cx, cy, cw, ch
+                        )
                     )
-                )
+                elif shape == 'circle':
+                    r = TILE_SIZE
+                    if scale:
+                        r = int(TILE_SIZE * (yp + random_shift(0.3, 0.6)))
+                    pygame.draw.circle(
+                        screen, cell,
+                        (cx, cy), r
+                    )
 
 
 pygame.init()
