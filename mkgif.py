@@ -6,6 +6,6 @@ filenames = sorted(glob.glob('export/*.png'))
 
 images = [imageio.imread(fn) for fn in filenames]
 
-today = datetime.date.today().strftime('%Y-%m-%d')
-fname = f'export/fire-{today}.gif'
+now = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+fname = f'export/fire-{now}.gif'
 imageio.mimsave(fname, images)
