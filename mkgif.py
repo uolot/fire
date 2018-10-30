@@ -1,17 +1,11 @@
-from PIL import Image
-import glob
 import datetime
+import glob
+import imageio
 
-images = [
-    Image.open(image)
-    for image in glob.glob('export/*.png')
-]
+filenames = sorted(glob.glob('export/*.png'))
+
+images = [imageio.imread(fn) for fn in filenames]
 
 today = datetime.date.today().strftime('%Y-%m-%d')
-gif = images[0]
-gif.save(
-    fp=f'fire-{today}.gif',
-    format='gif',
-    save_all=True,
-    append_images=images[1:]
-)
+fname = f'export/fire-{today}.gif'
+imageio.mimsave(fname, images)
