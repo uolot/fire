@@ -30,7 +30,7 @@ dirname = 'export'
 
 # drawing options
 shift = True
-SHIFT_FACTOR = 0.2
+SHIFT_FACTOR = 0.1
 
 
 def chance(p):
@@ -40,8 +40,8 @@ def chance(p):
 
 
 def random_shift(x, p):
-    r = random.random() * p * 2 - p
-    return x + r * x
+    d = x * p
+    return random.randint(-d, d)
 
 
 def new_grid():
