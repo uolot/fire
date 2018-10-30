@@ -6,7 +6,7 @@ import pygame
 
 
 # updates per second
-FRAME_RATE = 15
+FRAME_RATE = 10
 TILE_SIZE = 20
 
 SCREEN_SIZE = 800, 600
@@ -29,16 +29,17 @@ count = 0
 dirname = 'export'
 
 # drawing options
-shift = True
-SHIFT_FACTOR = 0.1
+shift = False
+SHIFT_FACTOR = 0.15
 
 # scaling options
 scale = True
 MIN_SCALE_FACTOR = 0.5
 
 # shape options
-shape = 'circle'
 # shape = 'rect'
+# shape = 'circle'
+shape = 'ellipse'
 
 
 def chance(p):
@@ -105,7 +106,7 @@ def iter_grid(grid):
     return new
 
 
-def draw_grid(grid, screen):
+def draw_grid(grid, screen):  # noqa (mccabe)
     for x, col in enumerate(grid):
         for y, cell in enumerate(col):
             if cell:
@@ -127,6 +128,7 @@ def draw_grid(grid, screen):
                             cx, cy, cw, ch
                         )
                     )
+
                 elif shape == 'circle':
                     r = TILE_SIZE
                     if scale:
@@ -134,6 +136,17 @@ def draw_grid(grid, screen):
                     pygame.draw.circle(
                         screen, cell,
                         (cx, cy), r
+                    )
+
+                elif shape == 'ellipse':
+                    cw, ch = TILE_SIZE * 1.5, TILE_SIZE * 3
+                    if scale:
+                        cw = cw * (yp + MIN_SCALE_FACTOR)
+                        ch = ch * (yp + MIN_SCALE_FACTOR)
+                    pygame.draw.ellipse(
+                        screen, cell, pygame.Rect(
+                            cx, cy, cw, ch
+                        )
                     )
 
 

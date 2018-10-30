@@ -8,4 +8,4 @@ images = [imageio.imread(fn) for fn in filenames]
 
 now = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
 fname = f'gifs/fire-{now}.gif'
-imageio.mimsave(fname, images, fps=15, subrectangles=True)
+imageio.mimsave(fname, images, fps=10, subrectangles=True)

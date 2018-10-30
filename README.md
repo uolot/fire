@@ -5,11 +5,4 @@ Made for fun, made from scratch - didn't do any research on how to create such e
 
 Very much WIP.
 
-30th of October - basic
-![](gifs/fire-2018-10-30_21-18-18.gif)
-
-30th of October - shifting and scaling squares
-![](gifs/fire-2018-10-30_22-19-54.gif)
-
-30th of October - circles
-![](gifs/fire-2018-10-30_22-42-05.gif)
+[See gifs](gifs/README.md)
