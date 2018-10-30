@@ -5,4 +5,5 @@ Made for fun, made from scratch - didn't do any research on how to create such e
 
 Very much WIP.
 
-![30th of October, 14:52](gifs/fire-2018-10-30_14-52-29.gif)
+30th of October, 21:18
+![30th of October, 21:18](gifs/fire-2018-10-30_21-18-18.gif)
