@@ -6,7 +6,7 @@ import pygame
 
 
 # updates per second
-FRAME_RATE = 15
+FRAME_RATE = 20
 TILE_SIZE = 20
 
 SCREEN_SIZE = 800, 600
