@@ -1,3 +1,7 @@
+# Squint for better FX
+
+![](squint.jpg)
+
 30th of October - basic
 ![](fire-2018-10-30_21-18-18.gif)
 
@@ -8,4 +12,4 @@
 ![](fire-2018-10-30_22-42-05.gif)
 
 30th of October - ellipses
-![](fire-2018-10-30_22-52-09.gif)
+![](fire-2018-10-30_23-09-23.gif)

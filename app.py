@@ -6,7 +6,7 @@ import pygame
 
 
 # updates per second
-FRAME_RATE = 10
+FRAME_RATE = 15
 TILE_SIZE = 20
 
 SCREEN_SIZE = 800, 600
@@ -71,6 +71,7 @@ def iter_grid(grid):
     for x, col in enumerate(grid):
         for y, cell in enumerate(col):
 
+            # TODO: fix green
             color = (128 + int(128 * y/GRID_H), 255 - int(255 * y/GRID_H), 0)
 
             if y == GRID_H-1 and chance(90):
@@ -100,7 +101,7 @@ def iter_grid(grid):
                 bottom = int(bool(left_col[y+1])) + int(bool(col[y+1])) + int(bool(right_col[y+1]))
                 points += bottom * 3
 
-            if int(points >= 5) and chance(30 + 50 * (y / GRID_H)):
+            if int(points >= 4) and chance(30 + 50 * (y / GRID_H)):
                 new[x][y] = color
 
     return new
