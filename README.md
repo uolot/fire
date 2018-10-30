@@ -8,6 +8,6 @@ Very much WIP.
 30th of October - basic
 ![](gifs/fire-2018-10-30_21-18-18.gif)
 
-30th of October - shifting squares
-![](gifs/fire-2018-10-30_21-53-29.gif)
+30th of October - shifting and scaling squares
+![](gifs/fire-2018-10-30_22-19-54.gif)
 

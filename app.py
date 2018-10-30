@@ -32,6 +32,10 @@ dirname = 'export'
 shift = True
 SHIFT_FACTOR = 0.1
 
+# scaling options
+scale = True
+MIN_SCALE_FACTOR = 0.5
+
 
 def chance(p):
     p = p / 100
@@ -103,9 +107,16 @@ def draw_grid(grid, screen):
                 if shift:
                     cx = cx + random_shift(TILE_SIZE, SHIFT_FACTOR)
                     cy = cy + random_shift(TILE_SIZE, SHIFT_FACTOR)
+
+                cw, ch = TILE_SIZE, TILE_SIZE
+                if scale:
+                    yp = y / GRID_H
+                    cw = cw * (yp + MIN_SCALE_FACTOR)
+                    ch = ch * (yp + MIN_SCALE_FACTOR)
+
                 pygame.draw.rect(
                     screen, cell, pygame.Rect(
-                        cx, cy, TILE_SIZE, TILE_SIZE
+                        cx, cy, cw, ch
                     )
                 )
 
