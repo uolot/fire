@@ -12,7 +12,20 @@ SCREEN_SIZE = 800, 600
 GRID_W = SCREEN_SIZE[0] // TILE_SIZE
 GRID_H = SCREEN_SIZE[1] // TILE_SIZE
 
+SKIP_FRAMES = 50
+MAX_FRAMES = 100 + SKIP_FRAMES
+
 BLACK = 0, 0, 0
+
+
+# game state
+done = False
+paused = False
+
+# export options
+export = len(sys.argv) > 1 and sys.argv[1] == '--gif'
+count = 0
+dirname = 'export'
 
 
 def chance(p):
@@ -21,9 +34,9 @@ def chance(p):
     return 1 if r < p else 0
 
 
-def new_grid(w, h):
-    col = h * [0]
-    return [col[:] for _ in range(w)]
+def new_grid():
+    col = GRID_H * [0]
+    return [col[:] for _ in range(GRID_W)]
 
 
 def init_grid(grid):
@@ -32,17 +45,14 @@ def init_grid(grid):
 
 
 def iter_grid(grid):
-    w = len(grid)
-    h = len(grid[0])
-
-    new = new_grid(w, h)
+    new = new_grid()
 
     for x, col in enumerate(grid):
         for y, cell in enumerate(col):
 
             color = (128 + int(128 * y/GRID_H), 255 - int(255 * y/GRID_H), 0)
 
-            if y == h-1 and chance(90):
+            if y == GRID_H-1 and chance(90):
                 new[x][y] = color
                 continue
 
@@ -69,7 +79,7 @@ def iter_grid(grid):
                 bottom = int(bool(left_col[y+1])) + int(bool(col[y+1])) + int(bool(right_col[y+1]))
                 points += bottom * 3
 
-            if int(points >= 5) and chance(30 + 50 * (y / h)):
+            if int(points >= 5) and chance(30 + 50 * (y / GRID_H)):
                 new[x][y] = color
 
     return new
@@ -91,17 +101,8 @@ pygame.init()
 screen = pygame.display.set_mode(SCREEN_SIZE)
 clock = pygame.time.Clock()
 
-grid = new_grid(GRID_W, GRID_H)
+grid = new_grid()
 init_grid(grid)
-
-done = False
-paused = False
-
-export = len(sys.argv) > 1 and sys.argv[1] == '--gif'
-count = 0
-dirname = 'export'
-SKIP_FRAMES = 50
-MAX_FRAMES = 100 + SKIP_FRAMES
 
 
 while not done:
@@ -115,8 +116,8 @@ while not done:
 
     if not paused:
         screen.fill(BLACK)
-        draw_grid(grid, screen)
         grid = iter_grid(grid)
+        draw_grid(grid, screen)
         pygame.display.update()
 
         if export:
