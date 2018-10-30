@@ -100,7 +100,7 @@ paused = False
 export = len(sys.argv) > 1 and sys.argv[1] == '--gif'
 count = 0
 dirname = 'export'
-MAX_FRAMES = 100
+MAX_FRAMES = 99
 
 
 while not done:
