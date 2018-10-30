@@ -1,6 +1,7 @@
 import pygame
 from random import random
 from collections import defaultdict
+import sys
 
 
 # updates per second
@@ -96,6 +97,12 @@ init_grid(grid)
 done = False
 paused = False
 
+export = len(sys.argv) > 1 and sys.argv[1] == '--gif'
+count = 0
+dirname = 'export'
+MAX_FRAMES = 100
+
+
 while not done:
     for event in pygame.event.get():
         done = event.type == pygame.QUIT
@@ -110,6 +117,12 @@ while not done:
         draw_grid(grid, screen)
         grid = iter_grid(grid)
         pygame.display.update()
+
+        if export:
+            if count >= MAX_FRAMES:
+                done = True
+            pygame.image.save(screen, f'{dirname}/{count:02}.png')
+            count += 1
 
     clock.tick(FRAME_RATE)
 
