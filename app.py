@@ -5,7 +5,7 @@ import sys
 
 
 # updates per second
-FRAME_RATE = 20
+FRAME_RATE = 15
 TILE_SIZE = 20
 
 SCREEN_SIZE = 800, 600
@@ -100,7 +100,7 @@ paused = False
 export = len(sys.argv) > 1 and sys.argv[1] == '--gif'
 count = 0
 dirname = 'export'
-SKIP_FRAMES = 20
+SKIP_FRAMES = 50
 MAX_FRAMES = 100 + SKIP_FRAMES
 
 
